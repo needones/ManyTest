@@ -1,0 +1,13 @@
+head
+     head
+         metas
+         style
+     head
+
+body
+     body_attribs
+     body
+         navbar  导航
+         content 内容
+         scripts js
+     body

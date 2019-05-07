@@ -1,0 +1,132 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display
+
+            -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">电影</a></li>
+                    <li><a href="#">电视剧</a></li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">注册</a></li>
+                    <li><a href="#">登录</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class = 'container'>
+        <div class="jumbotron">
+            <h1>欢迎来到德莱联盟</h1>
+            <p>一人带四坑，一打九，干就完了</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        </div>
+    </div>
+    
+    <div>
+        <ol>
+            {% for movie in pagination.items %}
+                <li>{{ movie.m_name }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    
+    
+    <div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if pagination.has_prev %}
+                    <li>
+                        <a href="{{ url_for('blue.index') }}?page={{ pagination.prev_num }}" aria-label="Previous">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                    </li>
+                    {% else %}
+                     <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+{#                {% for page in pagination.iter_pages()%}#}
+{##}
+{#                    <li><a href="#" class="active">{{ page }}</a></li>#}
+{##}
+{#                {% endfor %}#}
+
+
+                {% for page in pagination.iter_pages() %}
+                        {% if page %}
+                            {% if page != pagination.page %}
+                                <li>
+                                    <a href="{{ url_for('blue.index') }}?page={{ page }}">{{ page }}</a>
+                                </li>
+                            {% else %}
+                                <li class="active">
+                                    <a href="{{ url_for('blue.index') }}?page={{ page }}">{{ page }}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+{#                            <span class=ellipsis>…</span>#}
+                        {% endif %}
+                {% endfor %}
+
+                <!--
+                    blue = Blueprint('xzf',__name__)
+                    @blue.route('/asdf/')
+                    def a():
+                        return '123'
+
+                    url_for('xzf.a')
+
+                    url_for('blue.index')反向解析的返回值  是 路由/asdf/
+
+                -->
+                {% if pagination.has_next%}
+                    <li>
+                        <a href="{{ url_for('blue.index') }}?page={{ pagination.next_num }}" aria-label="Next">
+                            <span aria-hidden="true">下一页</span>
+                         </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">下一页</span>
+                         </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+        </nav>
+
+    </div>
+{% endblock %}
